@@ -33,8 +33,6 @@ public class MyAgnes {
             DistanceMatrix distanceMatrix = new DistanceMatrix(clusters);
             distanceMatrix.calculateSingleLinkage();
 
-            distanceMatrix.printDistanceMatrix();
-
             int[] nearestCluster = distanceMatrix.minimumDistance();
             int clusterAIdx = nearestCluster[0];
             int clusterBIdx = nearestCluster[1];
@@ -45,6 +43,11 @@ public class MyAgnes {
 
             System.out.println();
             System.out.println(clusters.size() + " Clusters : " + clusters.toString().substring(1, clusters.toString().length()-1).replace("],", "]"));
+            
+            if(clusters.size()==1){
+                distanceMatrix.printDistanceMatrix();
+            }
+            
         }
     }
     
@@ -64,9 +67,7 @@ public class MyAgnes {
         for (;clusters.size() != 1;) {
             DistanceMatrix distanceMatrix = new DistanceMatrix(clusters);
             distanceMatrix.calculateCompleteLinkage();
-
-            distanceMatrix.printDistanceMatrix();
-
+            
             int[] farCluster = distanceMatrix.maximumDistance();
             int clusterAIdx = farCluster[0];
             int clusterBIdx = farCluster[1];
@@ -77,6 +78,10 @@ public class MyAgnes {
 
             System.out.println();
             System.out.println(clusters.size() + " Clusters : " + clusters.toString().substring(1, clusters.toString().length()-1).replace("],", "]"));
+            
+            if(clusters.size()==1){
+                distanceMatrix.printDistanceMatrix();
+            }
         }
     }
 }
