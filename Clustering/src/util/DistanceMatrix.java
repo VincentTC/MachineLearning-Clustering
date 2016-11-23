@@ -49,7 +49,6 @@ public class DistanceMatrix {
     }
     
     public DistanceMatrix calculateCompleteLinkage(){
-        Float maximumDistance = Float.MIN_VALUE;
         
         for(int i=0; i<clusters.size(); i++){
             for(int j=i; j<clusters.size(); j++){
@@ -58,10 +57,11 @@ public class DistanceMatrix {
                 } else {
                     ArrayList<Point> firstCluster = clusters.get(i);
                     ArrayList<Point> secondCluster = clusters.get(j);
+                    Float maximumDistance = Float.MIN_VALUE;
                     
                     for(Point firstPoint: firstCluster){
                         for(Point secondPoint: secondCluster){
-                            maximumDistance = Math.min(maximumDistance, euclideanDistance(firstPoint, secondPoint));
+                            maximumDistance = Math.max(maximumDistance, euclideanDistance(firstPoint, secondPoint));
                         }
                     }
                     distanceMatrix[i][j] = maximumDistance;
@@ -72,7 +72,8 @@ public class DistanceMatrix {
         return this;
     }
     
-    public int[] getNearestCluster(){
+    // get minimum distance
+    public int[] minimumDistance(){
         Float minimumDistance = Float.MAX_VALUE;
         int firstCluster = -1;
         int secondCluster = -1;
@@ -81,6 +82,24 @@ public class DistanceMatrix {
             for(int j=i+1; j<distanceMatrix.length; j++){
                 if(distanceMatrix[i][j] < minimumDistance){
                     minimumDistance = distanceMatrix[i][j];
+                    firstCluster = i;
+                    secondCluster = j;
+                }
+            }
+        }
+        return new int[]{firstCluster, secondCluster};
+    }
+    
+    // get maximum distance
+    public int[] maximumDistance(){
+        Float maximumDistance = Float.MIN_VALUE;
+        int firstCluster = -1;
+        int secondCluster = -1;
+        
+        for(int i=0; i<distanceMatrix.length; i++){
+            for(int j=i+1; j<distanceMatrix.length; j++){
+                if(distanceMatrix[i][j] > maximumDistance){
+                    maximumDistance = distanceMatrix[i][j];
                     firstCluster = i;
                     secondCluster = j;
                 }
