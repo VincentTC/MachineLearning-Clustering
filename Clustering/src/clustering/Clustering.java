@@ -26,7 +26,7 @@ public class Clustering {
         System.out.println();
         ArrayList<Point> trainingPointData = new ArrayList<>();
         Point P = new Point(Float.valueOf(0), Float.valueOf(0));
-        CSVReader reader = new CSVReader(new FileReader("dataset/point.csv"));
+        CSVReader reader = new CSVReader(new FileReader("data/point.csv"));
         String[] nextLine;
         while ((nextLine = reader.readNext()) != null) {
             ArrayList<Float> instance = new ArrayList<>();
@@ -38,7 +38,10 @@ public class Clustering {
             trainingPointData.add(new Point(P.getAxis(), P.getOrdinate()));
         }
         MyAgnes myAgnes = new MyAgnes();
-        myAgnes.buildClusterer(trainingPointData);
-        myAgnes.printCluster();
+        System.out.println("SINGLE LINKAGE");
+        myAgnes.buildSingleLinkageClusterer(trainingPointData);
+        System.out.println();
+        System.out.println("COMPLETE LINKAGE");
+        myAgnes.buildCompleteLinkageClusterer(trainingPointData);
     }
 }
